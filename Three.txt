@@ -1,0 +1,30 @@
+A = [2 3 -1 4;1 -2 6 -7]
+b = [8;-3]
+c=[2;3;4;7];
+[m,n]=size(A)
+if(n>m)
+    ncm = nchoosek(n,m);
+    p = nchoosek(1:n,m);
+    sol=[];
+    
+    for i=1:ncm
+        y=zeros(n,1)
+        B=A(:,p(i,:));
+        x=inv(B)*b;
+        if(x>=0&x~=-inf&x~=inf)
+            y(p(i,:))=x;
+            sol=[sol,y]
+        end
+    end
+else
+    fprintf('ncm does not exist');
+end
+sol=sol'
+for i=1:size(sol,1)
+    fn(i,:)=sum(sum(sol(i,:)*c));
+end
+m=max(fn)
+k=find(fn==m)
+os=sol(k,:)
+fprintf('the optimal sol is:')
+disp (os)
